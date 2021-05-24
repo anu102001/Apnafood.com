@@ -147,28 +147,20 @@ $(document).ready(function()
     }
   });
 
-  $("#subskind").change(function() {
-    if ($(this).val().includes('Steak')) {
-      $("#subextras").show();
-    } else {
-      $("#subextras").hide();
-    }
-  });
-
-  $("#subskind").change(function() {
-    if ($(this).val().includes('Sausage, Peppers & Onions')) {
-      $("#subssize option[value='SMALL']").attr('disabled', 'disabled');
-    } else {
-      $("#subssize option[value='SMALL']").removeAttr('disabled');
-    }
-  });
+  // $("#dessertkind").change(function() {
+  //   if ($(this).val().includes('Steak')) {
+  //     $("#subextras").show();
+  //   } else {
+  //     $("#subextras").hide();
+  //   }
+  // });
 });
 </script>
 {% endblock %}
 
 
 {% block body %}
-<section class="hero is-primary is-bold is-fullheight">
+<section class="hero is-danger is-fullheight" style="background-color:  #f49030">
   <div class="hero-body">
     <div class="container">
 {% if message %}
@@ -177,10 +169,33 @@ $(document).ready(function()
 </div>
 {% endif %}
 
- <div class="container">
-    <div class="text-center">
-	     <h2>Our Menu</h2>
 
+<div class="container">
+  <div class="text-center mb-4">
+     <h2>Recommended Items</h2>
+  </div>
+</div>
+
+<div class="container mb-4">
+  <div class="columns is-desktop">
+    <div class="column" >
+       Masala Dosa
+      <img style="max-height: 280px; width: 100%;" src="https://www.cookwithmanali.com/wp-content/uploads/2020/05/Masala-Dosa-676x1024.jpg"></div>
+    <div class="column">
+      Mango Shake
+      <img style="max-height: 280px; width: 100%;" src="https://www.myweekendkitchen.in/wp-content/uploads/2016/04/Mango-shake.jpg"></div>
+    <div class="column">
+      Gulab Jamun
+      <img style="max-height: 280px; width: 100%;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1XnP9uw647tMNZKrg4RJawk8yqlAOgzJBYA&usqp=CAU"></div>
+    <div class="column">
+      Cheese Pizza
+      <img style="max-height: 280px; width: 100%;" src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/screen-shot-2019-09-05-at-11-41-30-am-1567698101.png"></div>
+  </div>
+</div>
+
+ <div class="container">
+    <div class="text-center mt-2">
+	     <h2>Menu Items</h2>
     </div>
  </div>
 <!--<table class="table-responsive">-->
@@ -200,7 +215,7 @@ $(document).ready(function()
             {% for key, values in regular.items %}
               {% if key == 'category' or key == 'price' %}
               {% elif values|length > 1 %}
-            <select class="form-control" name="{{ key }}" id="reg{{ key }}" required>
+            <select class="form-control mt-2" name="{{ key }}" id="reg{{ key }}" required>
               <option value="" selected disabled hidden>Choose {{ key }}</option>
               {% for v in values %}
               <option value="{{ v }}">{{ v }}</option>
@@ -210,7 +225,7 @@ $(document).ready(function()
             {% endfor %}
 
             {% for i in "iiiii" %}
-            <select class="form-control" name="topping{{ forloop.counter }}" id="regtopping{{ forloop.counter }}">
+            <select class="form-control mt-2" name="topping{{ forloop.counter }}" id="regtopping{{ forloop.counter }}">
               <option value="" selected disabled hidden>Topping {{ forloop.counter}}</option>
               {% for topping in toppings %}
               <option value="{{ topping }}">{{ topping }}</option>
@@ -226,25 +241,25 @@ $(document).ready(function()
               </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-warning">Add to Cart</button>
+          <button type="submit" class="btn btn-info">Add to Cart</button>
         </form>
       </div>
       </div>
 
-      <!-- Sicilian Pizza -->
+      <!-- Italian Pizza -->
       <div class="col-lg-4 col-md-4 col-sm-12">
             <div class="container">
         <form action="{% url 'additem' %}" method="post">
         {% csrf_token %}
-          {% for c in sicilian.category %}
-          {{ c }}
+          {% for c in italian.category %}
+          {{c}}
           <input type="hidden" value="{{ c }}" name="category" />
           {% endfor %}
           <div class="form-group mt-2">
-            {% for key, values in sicilian.items %}
+            {% for key, values in italian.items %}
             {% if key == 'category' or key == 'price'  %}
             {% elif values|length > 1 %}
-            <select class="form-control" name="{{ key }}" id="sic{{ key }}" required>
+            <select class="form-control mt-2" name="{{ key }}" id="sic{{ key }}" required>
               <option value="" selected disabled hidden>Choose {{ key }}</option>
               {% for v in values %}
               <option value="{{ v }}">{{ v }}</option>
@@ -253,7 +268,7 @@ $(document).ready(function()
             {% endif %}
             {% endfor %}
             {% for i in "iiiii" %}
-            <select class="form-control" name="topping{{ forloop.counter }}" id="sictopping{{ forloop.counter }}">
+            <select class="form-control mt-2" name="topping{{ forloop.counter }}" id="sictopping{{ forloop.counter }}">
               <option value="" selected disabled hidden>Item {{ forloop.counter }}</option>
               {% for topping in toppings %}
               <option value="{{ topping }}">{{ topping }}</option>
@@ -269,26 +284,61 @@ $(document).ready(function()
               </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-warning">Add to Cart</button>
+          <button type="submit" class="btn btn-info">Add to Cart</button>
         </form>
       </div>
       </div>
     <!--</tr>-->
     <!--<tr>-->
-      <!-- Subs -->
-       <div class="col-lg-4 col-md-6 col-sm-12">
+            <!-- dosa -->
+            <div class="col-lg-4 col-md-6 col-sm-12">
+              <div class="container">
+            <form action="{% url 'additem' %}" method="post">
+            {% csrf_token %}
+              {% for c in dosa.category %}
+                {{ c }}
+              <input type="hidden" value="{{ c }}" name="category" />
+              {% endfor %}
+              <div class="form-group mt-2">
+              {% for key, values in dosa.items %}
+                {% if key == 'category' or key == 'price'  %}
+                {% elif values|length > 1 %}
+                <select class="form-control mt-2" name="{{ key }}" id="dosa{{ key }}" required>
+                  <option value="" selected disabled hidden>Choose {{ key }}</option>
+                  {% for v in values %}
+                  <option value="{{ v }}">{{ v }}</option>
+                  {% endfor %}
+                </select>
+                {% endif %}
+              {% endfor %}
+                <div class="row mt-2">
+                  <label for="dosaqty" class="col-2 col-form-label">Quantity</label>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <input class="form-control" type="number" value="1" name="qty" id="dosaqty" min="1" max="50">
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-info">Add to Cart</button>
+            </form>
+          </div>
+          </div>
+
+      <!-- dessert -->
+       <div class="col-lg-4 col-md-6 col-sm-12 mt-4">
           <div class="container">
         <form action="{% url 'additem' %}" method="post">
           {% csrf_token %}
-            {% for c in subs.category %}
+            {% for c in dessert.category %}
               {{ c }}
             <input type="hidden" value="{{ c }}" name="category" />
             {% endfor %}
             <div class="form-group mt-2">
-              {% for key, values in subs.items %}
+              {% for key, values in dessert.items %}
                 {% if key == 'category' or key == 'price' %}
                 {% elif values|length > 1 %}
-                <select class="form-control" name="{{ key }}" id="subs{{ key }}" required>
+                <select class="form-control mt-2" name="{{ key }}" id="dessert{{ key }}" required>
                   <option value="" selected disabled hidden>Choose {{ key }}</option>
                 {% for v in values %}
                   <option value="{{ v }}">{{ v }}</option>
@@ -296,57 +346,33 @@ $(document).ready(function()
                 </select>
                 {% endif %}
               {% endfor %}
-                <div id="extracheese">
-              {% for extra in extras.name %}
-                  {% if 'Cheese' in extra %}
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="extra0" value="{{ extra }}" id="extra0">
-                    <label class="form-check-label" for="extra0">
-                    {{ extra }}
-                   </label>
-                  </div>
-                  {% endif %}
-              {% endfor %}
-              </div>
-              <div id="subextras">
-              {% for extra in extras.name %}
-                {% if 'Cheese' not in extra %}
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="{{ extra }}" name="extra{{ forloop.counter }}" id="extra{{ forloop.counter }}">
-                  <label class="form-check-label" for="extra{{ forloop.counter }}">
-                    {{ extra }}
-                  </label>
-                </div>
-                {% endif %}
-              {% endfor %}
-              </div>
               <div class="row mt-2">
-                <label for="subsqty" class="col-2 col-form-label">Quantity</label>
+                <label for="dessertqty" class="col-2 col-form-label">Quantity</label>
               </div>
               <div class="row">
                 <div class="col-sm-4" >
-                  <input class="form-control" type="number" value="1" name="qty" id="subsqty" min="1" max="50">
+                  <input class="form-control" type="number" value="1" name="qty" id="dessertqty" min="1" max="50">
                 </div>
               </div>
             </div>
-          <button type="submit" class="btn btn-warning">Add to Cart<Card></Card></button>
+          <button type="submit" class="btn btn-info">Add to Cart<Card></Card></button>
         </form>
           </div>
       </div>
-
-      <div class="col-lg-4 col-md-6 col-sm-12">
+ <!-- shakes -->
+      <div class="col-lg-4 col-md-6 col-sm-12 mt-4">
           <div class="container">
         <form action="{% url 'additem' %}" method="post">
         {% csrf_token %}
-	        {% for c in platters.category %}
+	        {% for c in shakes.category %}
 	          {{ c }}
 	        <input type="hidden" value="{{ c }}" name="category" />
 	        {% endfor %}
 	        <div class="form-group mt-2">
-          {% for key, values in platters.items %}
+          {% for key, values in shakes.items %}
 	          {% if key == 'category' or key == 'price'  %}
 	          {% elif values|length > 1 %}
-	          <select class="form-control" name="{{ key }}" id="platters{{ key }}" required>
+	          <select class="form-control mt-2" name="{{ key }}" id="shakes{{ key }}" required>
 	            <option value="" selected disabled hidden>Choose {{ key }}</option>
 	            {% for v in values %}
 	            <option value="{{ v }}">{{ v }}</option>
@@ -355,34 +381,34 @@ $(document).ready(function()
             {% endif %}
           {% endfor %}
             <div class="row mt-2">
-  	          <label for="saladsqty" class="col-2 col-form-label">Quantity</label>
+  	          <label for="dosaqty" class="col-2 col-form-label">Quantity</label>
 	          </div>
 	          <div class="row">
   	          <div class="col-sm-4" >
-	              <input class="form-control" type="number" value="1" name="qty" id="saladsqty" min="1" max="50">
+	              <input class="form-control" type="number" value="1" name="qty" id="dosaqty" min="1" max="50">
   	          </div>
 	          </div>
           </div>
-          <button type="submit" class="btn btn-warning">Add to Cart</button>
+          <button type="submit" class="btn btn-info">Add to Cart</button>
         </form>
       </div>
       </div>
     <!--</tr>-->
     <!--<tr>-->
-
-        <div class="col-lg-4 col-md-6 col-sm-12">
+   <!-- idli -->
+        <div class="col-lg-4 col-md-6 col-sm-12 mt-4">
           <div class="container">
         <form action="{% url 'additem' %}" method="post">
         {% csrf_token %}
-	        {% for c in pasta.category %}
+	        {% for c in idli.category %}
 	        {{ c }}
 	        <input type="hidden" value="{{ c }}" name="category" />
 	        {% endfor %}
 	        <div class="form-group mt-2">
-          {% for key, values in pasta.items %}
+          {% for key, values in idli.items %}
 	          {% if key == 'category' or key == 'price' %}
 	          {% elif values|length > 1 %}
-	          <select class="form-control" name="{{ key }}" id="pasta{{ key }}" required>
+	          <select class="form-control mt-2" name="{{ key }}" id="idli{{ key }}" required>
 	            <option value="" selected disabled hidden>Choose {{ key }}</option>
 	            {% for v in values %}
 	            <option value="{{ v }}">{{ v }}</option>
@@ -391,52 +417,19 @@ $(document).ready(function()
             {% endif %}
           {% endfor %}
 	          <div class="row mt-2">
-  	          <label for="pastaqty" class="col-2 col-form-label">Quantity</label>
+  	          <label for="idliqty" class="col-2 col-form-label">Quantity</label>
 	          </div>
 	          <div class="row">
               <div class="col-sm-4">
-	              <input class="form-control" type="number" value="1" name="qty" id="pastaqty" min="1" max="50">
+	              <input class="form-control" type="number" value="1" name="qty" id="idliqty" min="1" max="50">
   	          </div>
 	          </div>
           </div>
-          <button type="submit" class="btn btn-warning">Add to Cart</button>
+          <button type="submit" class="btn btn-info">Add to Cart</button>
         </form>
       </div>
       </div>
 
-      <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="container">
-        <form action="{% url 'additem' %}" method="post">
-        {% csrf_token %}
-	        {% for c in salads.category %}
-	          {{ c }}
-	        <input type="hidden" value="{{ c }}" name="category" />
-	        {% endfor %}
-	        <div class="form-group mt-2">
-          {% for key, values in salads.items %}
-	          {% if key == 'category' or key == 'price'  %}
-	          {% elif values|length > 1 %}
-	          <select class="form-control" name="{{ key }}" id="salads{{ key }}" required>
-	            <option value="" selected disabled hidden>Choose {{ key }}</option>
-	            {% for v in values %}
-	            <option value="{{ v }}">{{ v }}</option>
-              {% endfor %}
-	          </select>
-            {% endif %}
-          {% endfor %}
-            <div class="row mt-2">
-  	          <label for="saladsqty" class="col-2 col-form-label">Quantity</label>
-	          </div>
-	          <div class="row">
-              <div class="col-sm-4">
-	              <input class="form-control" type="number" value="1" name="qty" id="saladsqty" min="1" max="50">
-  	          </div>
-	          </div>
-          </div>
-          <button type="submit" class="btn btn-warning">Add to Cart</button>
-        </form>
-      </div>
-      </div>
  </div>
 </div>
 </div>

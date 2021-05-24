@@ -84,13 +84,13 @@ def menu_view(request):
     context = {
         'message': None,
         'regular': model_dict(MenuItem, 'Regular Pizza'),
-        'sicilian': model_dict(MenuItem, 'Sicilian Pizza'),
+        'italian': model_dict(MenuItem, 'Italian Pizza'),
         'toppings': PizzaTopping.objects.all(),
-        'subs': model_dict(MenuItem, 'Subs'),
+        'dessert': model_dict(MenuItem, 'Dessert'),
         'extras': model_dict(SubExtra),
-        'pasta': model_dict(MenuItem, 'Pasta'),
-        'salads': model_dict(MenuItem, 'Salads'),
-        'platters': model_dict(MenuItem, 'Dinner Platters'),
+        'idli': model_dict(MenuItem, 'Idli'),
+        'dosa': model_dict(MenuItem, 'Dosa'),
+        'shakes': model_dict(MenuItem, 'Shakes'),
         'cartcount': cart_count(request.user)
     }
     return render(request, 'orders/menu.html', context)
@@ -302,12 +302,12 @@ def place(request):
      #send_mail(subject,message,from_email ,to_list,fail_silently=False(To raise an error))
 
         # message='Your ORDER details are as follow'
-        subject = 'Pinocchios Pizza & Subs Order Details'
+        subject = 'ApnaFood.com Order Details'
         html_message = render_to_string('orders/order_email.html', {'name': customer,'order':cart})
         plain_message = strip_tags(html_message)
         from_email = settings.EMAIL_HOST_USER
         to = user.email
-        mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+      #  mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
 
     context = {
         'user': customer,
@@ -326,6 +326,7 @@ def charge(request):
     """
     customer = request.user
     order = cart(customer)
+    cart.in_cart = True
     context = {
         'message': None,
         'order': order,

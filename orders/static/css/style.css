@@ -25,3 +25,9 @@ padding-top: 1.5em;
 #subextras {
   display: none;
 }
+
+a{
+text-decoration: none !important;
+}
+
+

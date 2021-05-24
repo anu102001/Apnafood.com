@@ -11,9 +11,9 @@ class MenuItem(models.Model):
 
     def __str__(self):
         if self.extra:
-            return f'+ {self.kind} (${self.price})'
+            return f'+ {self.kind} (₹{self.price})'
         else:
-            return f'{self.category} / {self.size} {self.kind} (${self.price})'
+            return f'{self.category} / {self.size} {self.kind} (₹{self.price})'
 
 class PizzaTopping(models.Model):
     name = models.CharField(max_length=20)
